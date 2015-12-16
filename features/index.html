@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Active Data,data management,dataset,data-set,distributed,distributed dataset,distributed data-set,petri network,Inria,Simonet" />
+    <meta name="description" content="Presentation of Active Data: a software project that makes managing large distributed data-sets easier." />
+
+    <title>Active Data - Active Data Features</title>
+    <link rel="stylesheet" href="/stylesheet/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheet/justified-nav.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/stylesheet/style.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap-carousel.css">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.js"></script>
+	
+  </head>
+  <body>
+  <div class="container">
+    <div class="masthead">
+      <h3 class="text-muted">Active Data</h3>
+      <nav>
+          <ul class="nav nav-justified">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/features/">Features</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li class="dropdown">
+              <a href="/documentation/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documentation <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/documentation/API_Reference/">API Reference</a></li>
+                <li><a href="/documentation/tutorials/">Tutorials</a></li>
+              </ul>
+            </li>
+            <li><a href="/research/">Research</a></li>
+            <li><a href="/about/">About</a></li>
+
+          </ul>
+      </nav>
+    </div>
+  
+    <div id="main">
+      
+<div class="narrow">
+
+	<h1>Active Data features</h1>
+	<p>Active Data is a model and software that help managing distributed data life cycles.<br/>
+	For any data item, its life cycle represents the operational steps it will go through from
+	its creation to its deletion from a system: creation, writes, reads, replication, transfers,
+	derivations, deletion, etc.</p>
+	
+	<h2>Life cycle model</h2>
+	<p><img src="/img/example_1.png" style="float:right" alt="" title="" />
+	Active Data offers a meta-model to formally represent life cycles. An Active Data model looks
+	a lot like a Petri Network: data states are represented by cercles and one possible change
+	from one state to another is represented by a rectangle. Cercles are called Places and
+	rectangles are called transitions. Tokens on places represent the state of a data item and
+	replication is represented with several tokens.<br/>Multiple tokens on different places
+	represent the distributed state of data in several systems at the same time.
+	</p>
+	
+	<br />
+	<p><img src="/img/example_3.png" style="float:left" alt="" title="" /><br /><br />
+	Life cycle models can be composed together to model <b>more complex life cycles</b>.<br/><br/>
+	For example, says that you have several replicas of the same data object on a storage service
+	and you want to transfer it. The transfer service creates a life cycle just for the transfer
+	(e.g. start, transferring, pause, restart, success, failure…); the storage service creates a
+	different life cycle (e.g. create, write, read, move, replicate, split, delete…).<br/>
+	Composing both, the whole life cycle will be exposed on a single view and Active Data
+	automatically makes sense of the different data identifiers in different systems.</p>
+	
+	<h2>Programming model</h2>
+	<p><img src="/img/example_4.png" style="float:right" alt="" title="" /><br />
+	<br /><br />
+	Active Data allows users to react to life cycle progression. Reacting
+	can be getting <b>notifications</b> or <b>executing</b> arbitrary code when a transition in
+	the model occurs.
+	<br/><br/>
+	Code is executed by clients independently of other clients in an <b>event driven</b> fashion.
+	Data management tasks implemented with Active Data require very few code and are <b>implicitly
+	parallel</b>.
+	</p>
+	
+	<h2>Runtime library</h2>
+	<p>Active Data is implemented as a stand-alone Java library that provides:</p>
+	<ul>
+		<li>an API to implement life cycle models;</li>
+		<li>an API to provide handler code to be automatically executed when transitions are published;
+		<li>a centralized service, the Active Data Service to receive transition publications from
+		clients, forward them to other clients and orchestrate everything;</li>
+		<li>an API to publish life cycle transitions to the Active Data Service.
+	</ul>
+	<p>The library is very lightweight, which makes it easy to integrate to your applications and to
+	existing data management software.</p>
+	
+	<h2>Error checking</h2>
+	
+	<p>The Active Data Service takes life cycle models as input and is able to dynamically check that
+	changes of data states are valid with respect to the model.<br/>
+	The service maintains the global state of all data life cycles in the system; when a system performs
+	an action on data, the service checks the action against the current global data state
+	and decides if it legal or not. If the current data state is incompatible with the action reported
+	by the system, an exception is raised.</p>
+	
+	<p>This feature enables to quickly detect abnormal operations and prevent your data to be in
+	a state that is consistent with a particular system but not your personal workflow.</p>
+	
+	<h2>Life cycle catalog</h2>
+	<p>Active Data provides a life cycle catalog that maintains the global state of your data. Say that your
+	favourite data item is stored on an infrastructure and a computation using it is running on another;
+	the state of both replicas can be queried from the Active Data Service using the client API. Decisions
+	can be made locally based on the global state of your data. Because the service knows every life cycle
+	transition that ocures and performs error checking, the the life cycles it maintains remains consistent
+	over time.</p>
+
+</div>
+
+    </div>
+    
+    <div class="footer">Author:&nbsp;Anthony SIMONET</div>
+  </div>
+  </body>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-67289598-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>

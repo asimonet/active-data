@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Active Data,data management,dataset,data-set,distributed,distributed dataset,distributed data-set,petri network,Inria,Simonet" />
+    <meta name="description" content="Active Data is a free software that helps scientists manage large data-sets distributed across
+    	heterogeneous systems and infrastructures." />
+
+    <title>Active Data - Active Data Home</title>
+    <link rel="stylesheet" href="/stylesheet/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheet/justified-nav.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/stylesheet/style.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap-carousel.css">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.js"></script>
+	
+
+	<script type="text/javascript" src="/js/paper-core.min.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+	//Set the carousel options
+		$('#home-carousel').carousel({
+			pause: true,
+			interval: false,
+		}).carousel(0);
+	});
+	</script>
+	
+  </head>
+  <body>
+  <div class="container">
+    <div class="masthead">
+      <h3 class="text-muted">Active Data</h3>
+      <nav>
+          <ul class="nav nav-justified">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li class="dropdown">
+              <a href="/documentation/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documentation <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/documentation/API_Reference/">API Reference</a></li>
+                <li><a href="/documentation/tutorials/">Tutorials</a></li>
+              </ul>
+            </li>
+            <li><a href="/research/">Research</a></li>
+            <li><a href="/about/">About</a></li>
+
+          </ul>
+      </nav>
+    </div>
+  
+    <div id="main">
+      
+<!--<div class="hero-unit">
+  <h1>Active Data</h1>
+  <p>Active Data is a model and software that enables you to easily keep track of what's happening with your
+  data, no matter how and where they are distributed.
+  <p><a href="#" class="btn btn-primary btn-large">Read more &raquo;</a></p>
+</div>
+//-->
+
+<div class="row">
+	<div class="carousel slide" data-ride="carousel" id="home-carousel">
+		<!-- Bottom Carousel Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#home-carousel" data-slide-to="0" class="active"></li>
+			<li data-target="#home-carousel" data-slide-to="1"></li>
+			<li data-target="#home-carousel" data-slide-to="2"></li>
+		</ol>
+		<!-- Carousel Slides / Quotes -->
+		<div class="carousel-inner">
+			<!-- Slide 1 -->
+			<div class="item active">
+				<span class="slide-title">Model the life cycle of data in your system</span>
+
+				<div style="margin-top: 30px;">
+					<img src="/img/worm_app.png" style="float:left;" />
+					<canvas id="home-first-model" width="390" height="170" style="float: right; margin-top: 20px;"></canvas>
+					<script type="text/javascript">
+					$(document).ready(function() {
+						var model = new LifeCycleModel($('#home-first-model')[0]);
+						model.grid_size = new paper.Point(60, 40);
+	
+						var created = model.addPlace("Created", 0, 1);
+						created.addToken();
+						var written = model.addPlace({name: "Written", position: {x: 2, y: 1}, labelPosition: 'above'});
+						var readed = model.addPlace({name: "Read", position: {x: 4, y: 1}, labelPosition: 'above'});
+						var terminated = model.addPlace("Terminated", 6, 1);
+	
+						var write = model.addTransition({name: "Write", position: {x: 1, y:1}, labelPosition: 'above'});
+						var read = model.addTransition({name: "Read", position: {x: 3, y: 1}, labelPosition: 'above'});
+						var readAgain = model.addTransition("Read", 4, 3);
+						var end = model.addTransition({name: "End", position: {x: 5, y: 1}, labelPosition: 'above'});
+						
+						model.addArc(created.east, write.west);
+						model.addArc(write.east, written.west);
+						model.addArc(written.east, read.west);
+						model.addArc(read.east, readed.west);
+						model.addArc({from: readed.south, to: readAgain.north, bend: 'left'});
+						model.addArc({from: readAgain.north, to: readed.south, bend: 'right'});
+						model.addArc(readed.east, end.west);
+						model.addArc(end.east, terminated.west);
+						
+						model.zoom(0.9);
+						model.center(3,1.5);
+					});
+					</script>
+				</div>
+			</div>
+			
+			<!-- Slide 2 -->
+			<div class="item">
+				<span class="slide-title">Have your system report to Active Data</span>
+
+				<div style="float: left;">
+					<div class="row">
+						<table class="code block active" id="code-1">
+							<tr class="selected">
+								<td>1.</td>
+								<td>int f = open("input.dat", O_WRONLY);</td>
+							</tr>
+							<tr>
+								<td>2.</td>
+								<td>write(f, buf, SIZE);</td>
+							</tr>
+							<tr>
+								<td>3.</td>
+								<td>close(f);</td>
+							</tr>
+						</table>
+						<img class="block" id="transmission-1" style="display: none;" src="/img/transmission.gif" alt="" width="40" height="50" />
+					</div>
+					<div class="row">
+						<table class="code block" id="code-2">
+							<tr>
+								<td>1.</td>
+								<td>int f = open("input.dat", O_RDONLY);</td>
+							</tr>
+							<tr>
+								<td>2.</td>
+								<td>int n = 0;</td>
+							</tr>
+							<tr>
+								<td>3.</td>
+								<td>while((n = read(f, buf, SIZE)) >= 0)</td>
+							</tr>
+							<tr>
+								<td>4.</td>
+								<td style="padding-left: 20pt;">doSomething(buf);</td>
+							</tr>
+							<tr>
+								<td>5.</td>
+								<td>close(f);</td>
+							</tr>
+						</table>
+						<img class="block" id="transmission-2" style="display: none;" src="/img/transmission.gif" alt="" width="40" height="50" />
+					</div>
+				</div>
+				<div style="margin-top: 10px;">
+					<canvas id="home-second-model" width="370" height="170" style="float: right; margin-top:0px;"></canvas>
+					<script type="text/javascript">
+					var currentCode = 0;
+					var currentLine = 0;
+					var currentIter = 0;
+					var timesRead = 0;
+					var timeout = 1200;
+
+					var animationEndHandler = function(arg) {
+						setTimeout(function() {animateCode(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5]);}, timeout);
+					};
+					
+					function animateCode(paper, pnet, write, read, readAgain, end) {
+						var handlerArg = [paper, pnet, write, read, readAgain, end];
+						$('table.code#code-' + (currentCode + 1) + ' tr:nth-child(' + (currentLine + 1) + ')').toggleClass('selected');
+						
+						// Compute what the next line is
+						currentLine = (currentLine + 1) % $('table.code#code-' + (currentCode + 1) + ' tbody').children().length;
+						if(currentLine == 0) { 
+							$('#code-' + (currentCode + 1)).removeClass('active');
+							currentCode = (currentCode + 1) % 2;
+							$('#code-' + (currentCode + 1)).addClass('active');
+
+							// Reset the pnet
+							if(currentCode == 0) {
+								pnet.reset();
+								currentCode = currentLine = currentIter = timesRead = 0;
+							}
+						}
+						
+						if(currentCode == 1 && currentLine == 4) {
+							if(currentIter++ < 3)
+								currentLine = 2;
+							else {
+								currentIter = 0;
+								currentLine = 4
+							}
+						}
+
+						$('table.code#code-' + (currentCode + 1) + ' tr:nth-child(' + (currentLine + 1) + ')').toggleClass('selected');
+						
+						// Show the image?
+						$('img#transmission-1').hide();
+						$('img#transmission-2').hide();
+
+						// First code
+						if(currentCode == 0 && currentLine == 1) {
+							$('img#transmission-1').show();
+							write.trigger(animationEndHandler, handlerArg);
+							return;
+						}
+						
+						// Second code
+						if(currentCode == 1) {
+							if(currentLine == 2) {
+								$('img#transmission-2').show();
+
+								if(timesRead++ > 0)
+									readAgain.trigger(animationEndHandler, handlerArg);
+								else
+									read.trigger(animationEndHandler, handlerArg);
+
+								return;
+							}
+							else if(currentLine == 4) {
+								$('img#transmission-2').show();
+								end.trigger(animationEndHandler, handlerArg);
+								return;
+							}
+						}
+
+						if(currentCode== 1 && currentLine == 3)
+							$('img#transmission-2').show();
+						
+						setTimeout(function() {animateCode(paper, pnet, write, read, readAgain, end);}, timeout);
+					}
+					
+					$(document).ready(function() {
+						// Draw the pnet
+						var secondModel = new LifeCycleModel($('#home-second-model')[0]);
+						secondModel.grid_size = new paper.Point(60, 40);
+	
+						var created = secondModel.addPlace("Created", 0, 1);
+						created.addToken();
+						var written = secondModel.addPlace({name: "Written", position: {x: 2, y: 1}, labelPosition: 'above'});
+						var readed = secondModel.addPlace({name: "Read", position: {x: 4, y: 1}, labelPosition: 'above'});
+						var terminated = secondModel.addPlace("Terminated", 6, 1);
+	
+						var write = secondModel.addTransition({name: "Write", position: {x: 1, y:1}, labelPosition: 'above'});
+						var read = secondModel.addTransition({name: "Read", position: {x: 3, y: 1}, labelPosition: 'above'});
+						var readAgain = secondModel.addTransition("Read Again", 4, 3);
+						var end = secondModel.addTransition({name: "End", position: {x: 5, y: 1}, labelPosition: 'above'});
+						
+						secondModel.addArc(created.east, write.west);
+						secondModel.addArc(write.east, written.west);
+						secondModel.addArc(written.east, read.west);
+						secondModel.addArc(read.east, readed.west);
+						secondModel.addArc({from: readed.south, to: readAgain.north, bend: 'left'});
+						secondModel.addArc({from: readAgain.north, to: readed.south, bend: 'right'});
+						secondModel.addArc(readed.east, end.west);
+						secondModel.addArc(end.east, terminated.west);
+						
+						secondModel.zoom(0.9);
+						secondModel.center(3,1.5);
+						
+						// Animate the code
+						animateCode(paper, secondModel, write, read, readAgain, end);
+					});
+					</script>
+				</div>
+			</div>
+			
+			<!-- Slide 3 -->
+			<div class="item" id ="third-slide">
+				<span class="slide-title">Active Data now reports to you</span>
+				<div style="margin-top: 30px;">
+					<img src="/img/worm_app.png" style="float:left;" />
+					<canvas id="home-third-model" width="360" height="170" style="float: left; margin-top: 20px;"></canvas>
+					<script type="text/javascript">
+					
+					$(document).ready(function() {
+						var thirdModel = new LifeCycleModel($('#home-third-model')[0]);
+						thirdModel.grid_size = new paper.Point(60, 40);
+	
+						var created = thirdModel.addPlace("Created", 0, 1);
+						created.addToken();
+						var processed = thirdModel.addPlace({name: "Processed", position: {x: 2, y: 1}, labelPosition: 'below'});
+						var terminated = thirdModel.addPlace("Terminated", 4, 1);
+	
+						var process = thirdModel.addTransition({name: "Process", position: {x: 1, y: 1}, labelPosition: 'above'});
+						var end = thirdModel.addTransition({name: "End", position: {x: 3, y: 1}, labelPosition: 'above'});
+						
+						thirdModel.addArc(created.east, process.west);
+						thirdModel.addArc(process.east, processed.west);
+						thirdModel.addArc(processed.east, end.west);
+						thirdModel.addArc(end.east, terminated.west);
+						
+						thirdModel.zoom(0.9);
+						thirdModel.center(1.4,2.3);
+						
+						var twitter;
+						var gmail;
+						var gear;
+						var shapes = [];
+						
+						function scaleIn(path, x, y, targetScale, callback) {
+							var thePaper = thirdModel.paper;
+							var raster = new thePaper.Raster(path, new thePaper.Point(x, y));
+							//raster.scale(.02);
+							raster.scale(targetScale);
+
+							/*raster.onLoad = function() {
+								var interval_id = setInterval(function() {
+									raster.scale(raster.scaling.add(new thePaper.Point(0.02, 0.02)));
+
+									if(raster.scaling.x >= targetScale) {
+										clearInterval(interval_id);
+										callback();
+									}
+								}, 50);
+							};*/
+							
+							var from = process.shape.position.add(new thePaper.Point(0, 30));
+							var to = raster.position.add(new thePaper.Point(0, -30));
+							var vector = to.subtract(from);
+							var arrowVector = vector.normalize(5);
+
+							line = new thePaper.Path({
+								segments: [from, to],
+								closed: false,
+								strokeWidth: 5,
+								strokeCap: 'round',
+								strokeColor: '#707070'
+							});
+							
+							var arrow = new thePaper.Path({
+								segments: [to.add(arrowVector.rotate(135)),
+								           to.add(arrowVector.rotate(-135)),
+								           to],
+								closed: true,
+								strokeWidth: 5,
+								strokeCap: 'round',
+								strokeColor: '#707070'
+							});
+							
+							setTimeout(callback, 200);
+							
+							shapes[shapes.length] = arrow;
+							shapes[shapes.length] = raster;
+							return raster;
+						}
+						
+						$('#home-carousel').on('slid.bs.carousel', function() {
+							if($('div#third-slide').hasClass('active')) {
+								// Reset everything
+								thirdModel.reset();
+								var processX = process.shape.position.x;
+								
+								setTimeout(function() {
+									process.trigger(function() {
+										// Display the logos
+										twitter = scaleIn("/img/twitter_logo_blue.png", processX - 80, 150, 0.4, function() {
+											gmail = scaleIn("/img/gmail_logo.png", processX, 150, 0.6, function() {
+												gear = scaleIn("/img/gear_icon.png", processX + 80, 150, 0.15, function () {
+													paper.view.onFrame = function() {
+														gear.rotate(1);
+													}
+												});
+											});
+										});
+											
+									});
+								}, 500);
+							}
+						});
+					});
+					</script>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Carousel Buttons Next/Prev -->
+        <a data-slide="prev" href="#home-carousel" class="left carousel-control"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a data-slide="next" href="#home-carousel" class="right carousel-control"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	</div>
+</div>
+
+<blockquote class="emph"><em>Active Data</em> is a free software system that tracks the life cycle of data distributed across heterogeneous software and infrastructures.
+It allows you to <strong>instantly watch</strong> the state of your data in <strong>real-time</strong> without digging in dozens of log files and
+terminals. With <em>Active Data</em> never lose track of your data, wherever it is!</blockquote>
+
+<div class="row">
+  <div class="col-lg-4">
+    <h2>Features</h2>
+    <p><strong>Active Data</strong> packs many tools to make data management easier! Learn more about the model, the runtime system, the life-cycle
+    catalog and more!</p>
+    <a class="btn" href="/features/">View all features &raquo;</a>
+  </div>
+  <div class="col-lg-4">
+    <h2>Download</h2>
+    <p><strong>Active Data</strong> source code and binaries are freely available for download under the GNU GPL license.</p> 
+    <a class="btn" href="/download/">Get Active Data &raquo;</a>
+  </div>
+  <div class="col-lg-4">
+    <h2>Tutorials</h2>
+    <p>Get started with <strong>Active Data</strong> right away following easy tutorials.</p>
+    <a class="btn" href="/documentation/tutorials/">Read tutorials &raquo;</a>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/pnet.js"></script>
+
+    </div>
+    
+    <div class="footer">Author:&nbsp;Anthony SIMONET</div>
+  </div>
+  </body>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-67289598-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>

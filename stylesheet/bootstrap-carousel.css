@@ -1,0 +1,112 @@
+/* 
+ * Adapted from http://bootsnipp.com/snippets/featured/responsive-home-carousel
+ */
+#home-carousel 
+{
+	width:70%;
+	padding: 10px 20px 10px 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Control buttons	*/
+#home-carousel .carousel-control
+{
+	background: none;
+	color: #222;
+	font-size: 2.3em;
+	text-shadow: none;
+	margin-top: 0px;
+}
+/* Previous button	*/
+#home-carousel .carousel-control.left 
+{
+	left: -30px;
+}
+/* Next button	*/
+#home-carousel .carousel-control.right 
+{
+	right: -30px !important;
+}
+/* Changes the position of the indicators */
+#home-carousel .carousel-indicators 
+{
+	right: 50%;
+	top: auto;
+	bottom: 0px;
+	margin-right: -19px;
+}
+/* Changes the color of the indicators */
+#home-carousel .carousel-indicators li 
+{
+	background: #c0c0c0;
+}
+#home-carousel .carousel-indicators .active 
+{
+	background: #333333;
+}
+
+#home-carousel div.item {
+	height: 250px;
+	padding-left: 40px;
+	padding-right: 20px;
+	overflow: hidden;
+}
+
+#home-carousel span.slide-title {
+	font-size: 22pt;
+	font-weight: bold;
+	color: #367EE3;
+	line-height: 1em;
+}
+
+#home-carousel div.row {
+	margin-top: 20px;
+}
+
+#home-carousel div.row .block {
+	display: inline-block;
+	vertical-align: middle
+}
+
+#home-carousel div.row img {
+	margin-left: 20px;
+}
+
+
+/* End carousel */
+
+/**
+	MEDIA QUERIES
+*/
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+		#home-carousel 
+		{
+			margin-bottom: 0;
+			padding: 0 40px 30px 40px;
+		}
+		
+}
+
+/* Small devices (tablets, up to 768px) */
+@media (max-width: 768px) { 
+		
+		/* Make the indicators larger for easier clicking with fingers/thumb on mobile */
+		
+		#home-carousel .carousel-indicators {
+				bottom: -20px !important;	
+		}
+		#home-carousel .carousel-indicators li {
+				display: inline-block;
+				margin: 0px 5px;
+				width: 15px;
+				height: 15px;
+		}
+		#home-carousel .carousel-indicators li.active {
+				margin: 0px 5px;
+				width: 20px;
+				height: 20px;
+		}
+}
